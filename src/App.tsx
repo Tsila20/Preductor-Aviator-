@@ -77,8 +77,18 @@ export default function App() {
   const [nextRoundIn, setNextRoundIn] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
   const [gameId, setGameId] = useState('B261-7842-910');
+  const [livePlayers, setLivePlayers] = useState(1240);
+  const [totalWins, setTotalWins] = useState(8429);
 
   const [showActivationHint, setShowActivationHint] = useState(false);
+
+  useEffect(() => {
+    // Simulate live player fluctuation
+    const interval = setInterval(() => {
+      setLivePlayers(prev => prev + Math.floor(Math.random() * 11) - 5);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (nextRoundIn > 0) {
@@ -326,7 +336,18 @@ export default function App() {
               </div>
             </div>
 
-            <div className="pt-8 text-center">
+            <div className="pt-8 text-center space-y-4">
+              <div className="flex items-center justify-center space-x-6">
+                <div className="flex flex-col items-center">
+                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Live Players</span>
+                  <span className="text-sm font-black text-green-500">{livePlayers.toLocaleString()}</span>
+                </div>
+                <div className="w-[1px] h-8 bg-white/10" />
+                <div className="flex flex-col items-center">
+                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Total Wins</span>
+                  <span className="text-sm font-black text-aviator-red">{totalWins.toLocaleString()}</span>
+                </div>
+              </div>
               <p className="text-sm text-white/40">
                 Join our telegram <a href="#" className="text-aviator-red underline">https://t.me/AviatorPredictor...</a>
               </p>
